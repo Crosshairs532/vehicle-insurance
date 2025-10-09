@@ -1,6 +1,5 @@
-from src.logger import logger
+from src.components.data_ingestion import DataIngestion
 
-logger.debug("Debug message, goes to file only")
-logger.info("Info message, goes to file + console")
-logger.warning("Warning message, goes to file + console")
-logger.error("Error message, goes to file + console")
+if  __name__ == "__main__":
+    dataIngestion = DataIngestion()
+    dataIngestion.initiate_data_ingestion()
