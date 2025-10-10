@@ -1,5 +1,6 @@
-from src.components.data_ingestion import DataIngestion
+from src.pipline.training_pipeline import TrainPipeline
 
-if  __name__ == "__main__":
-    dataIngestion = DataIngestion()
-    dataIngestion.initiate_data_ingestion()
+
+
+pipeline = TrainPipeline()
+pipeline.run_pipeline()
