@@ -3,7 +3,7 @@ import numpy as np
 from typing import Tuple
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
-from src.exception import MyException
+from src.exception import CustomException
 from src.logger import logging
 from src.utils.main_utils import load_numpy_array_data, load_object, save_object
 from src.entity.config_entity import ModelTrainerConfig
@@ -49,7 +49,7 @@ class ModelTrainer:
             return model, metric_artifact
         
         except Exception as e:
-            raise MyException(e, sys) from e
+            raise CustomException(e, sys) from e
 
     def initiate_model_trainer(self) -> ModelTrainerArtifact:
         logging.info("Entered initiate_model_trainer method of ModelTrainer class")
@@ -88,4 +88,4 @@ class ModelTrainer:
             return model_trainer_artifact
         
         except Exception as e:
-            raise MyException(e, sys) from e
+            raise CustomException(e, sys) from e

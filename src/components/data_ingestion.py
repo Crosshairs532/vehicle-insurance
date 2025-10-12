@@ -56,7 +56,7 @@ class DataIngestion:
 
             logging.info(f"Exported train and test file path.")
         except Exception as e:
-            raise MyException(e, sys) from e
+            raise CustomException(e, sys) from e
 
     def initiate_data_ingestion(self) -> DataIngestionArtifact:
 

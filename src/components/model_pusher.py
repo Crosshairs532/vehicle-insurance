@@ -1,7 +1,7 @@
 import sys
 
 from src.cloud_storage.aws_storage import StorageService
-from src.exception import MyException
+from src.exception import CustomException
 from src.logger import logger
 from src.entity.artifact_entity import ModelPusherArtifact, ModelEvaluationArtifact
 from src.entity.config_entity import ModelPusherConfig
@@ -36,4 +36,4 @@ class ModelPusher:
             
             return model_pusher_artifact
         except Exception as e:
-            raise MyException(e, sys) from e
+            raise CustomException(e, sys) from e

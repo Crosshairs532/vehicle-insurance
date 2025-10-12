@@ -1,7 +1,7 @@
 from src.entity.config_entity import ModelEvaluationConfig
 from src.entity.artifact_entity import ModelTrainerArtifact, DataIngestionArtifact, ModelEvaluationArtifact
 from sklearn.metrics import f1_score
-from src.exception import MyException
+from src.exception import CustomException
 from src.constants import TARGET_COLUMN
 from src.logger import logging
 from src.utils.main_utils import load_object
@@ -29,7 +29,7 @@ class ModelEvaluation:
             self.data_ingestion_artifact = data_ingestion_artifact
             self.model_trainer_artifact = model_trainer_artifact
         except Exception as e:
-            raise MyException(e, sys) from e
+            raise CustomException(e, sys) from e
 
     def get_best_model(self):
         try:
@@ -42,7 +42,7 @@ class ModelEvaluation:
                 return vehicle_estimator
             return None
         except Exception as e:
-            raise  MyException(e,sys)
+            raise  CustomException(e,sys)
         
     def _map_gender_column(self, df):
         """Map Gender column to 0 for Female and 1 for Male."""
@@ -110,7 +110,7 @@ class ModelEvaluation:
             return result
 
         except Exception as e:
-            raise MyException(e, sys)
+            raise CustomException(e, sys)
 
     def initiate_model_evaluation(self):
 
@@ -128,4 +128,4 @@ class ModelEvaluation:
             logger.info(f"Model evaluation artifact: {model_evaluation_artifact}")
             return model_evaluation_artifact
         except Exception as e:
-            raise MyException(e, sys) from e
+            raise CustomException(e, sys) from e

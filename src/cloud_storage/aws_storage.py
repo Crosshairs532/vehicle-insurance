@@ -3,6 +3,7 @@ from src.logger import logger
 from src.exception import CustomException
 import sys
 import os
+import pandas as pd
 
 class StorageService:
 
@@ -110,16 +111,8 @@ class StorageService:
         except Exception as e:
             raise CustomException(e, sys) from e
 
-    def upload_df_as_csv(self, data_frame: DataFrame, local_filename: str, bucket_filename: str, bucket_name: str) -> None:
-        """
-        Uploads a DataFrame as a CSV file to the specified S3 bucket.
-
-        Args:
-            data_frame (DataFrame): DataFrame to be uploaded.
-            local_filename (str): Temporary local filename for the DataFrame.
-            bucket_filename (str): Target filename in the bucket.
-            bucket_name (str): Name of the S3 bucket.
-        """
+    def upload_df_as_csv(self, data_frame, local_filename: str, bucket_filename: str, bucket_name: str) -> None:
+       
         logger.info("Entered the upload_df_as_csv method of SimpleStorageService class")
         try:
             # Save DataFrame to CSV locally and then upload it
@@ -129,26 +122,18 @@ class StorageService:
         except Exception as e:
             raise CustomException(e, sys) from e
 
-    def get_df_from_object(self, object_: object) -> DataFrame:
-        """
-        Converts an S3 object to a DataFrame.
+    def get_df_from_object(self, object_: object):
 
-        Args:
-            object_ (object): The S3 object.
-
-        Returns:
-            DataFrame: DataFrame created from the object content.
-        """
         logger.info("Entered the get_df_from_object method of SimpleStorageService class")
         try:
             content = self.read_object(object_, make_readable=True)
-            df = read_csv(content, na_values="na")
+            df = pd.read_csv(content, na_values="na")
             logger.info("Exited the get_df_from_object method of SimpleStorageService class")
             return df
         except Exception as e:
             raise CustomException(e, sys) from e
 
-    def read_csv(self, filename: str, bucket_name: str) -> DataFrame:
+    def read_csv(self, filename: str, bucket_name: str):
 
         logger.info("Entered the read_csv method of SimpleStorageService class")
         try:
