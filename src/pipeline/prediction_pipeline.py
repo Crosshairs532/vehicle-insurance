@@ -39,8 +39,7 @@ class VehicleData:
 
     def get_vehicle_input_data_frame(self)-> DataFrame:
       
-        try:
-            
+        try: 
             vehicle_input_dict = self.get_vehicle_data_as_dict()
             return DataFrame(vehicle_input_dict)
         
@@ -76,7 +75,6 @@ class VehicleData:
 
 class VehicleDataClassifier:
     def __init__(self,prediction_pipeline_config: VehiclePredictorConfig = VehiclePredictorConfig(),) -> None:
-
         try:
             self.prediction_pipeline_config = prediction_pipeline_config
         except Exception as e:

@@ -79,8 +79,6 @@ class TrainPipeline:
         except Exception as e:
             raise CustomException(e, sys)
 
-
-
     def start_model_evaluation(self, data_ingestion_artifact: DataIngestionArtifact,
                             model_trainer_artifact: ModelTrainerArtifact) -> ModelEvaluationArtifact:
 
