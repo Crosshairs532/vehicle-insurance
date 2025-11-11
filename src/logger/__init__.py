@@ -41,7 +41,7 @@ def get_logger(name:str):
     )
     file_handler.setFormatter(file_formatter)
     file_handler.setLevel(logging.DEBUG)
-    logger.addHandler(file_handler)
+    # logger.addHandler(file_handler)
 
     # -------------------------------
     # Console Handler (Stream)
@@ -52,7 +52,7 @@ def get_logger(name:str):
     )
     console_handler.setFormatter(console_formatter)
     console_handler.setLevel(logging.INFO)  # Only INFO+ on console
-    logger.addHandler(console_handler)
+    # logger.addHandler(console_handler)
 
     # -------------------------------
     # Optional: Avoid adding handlers multiple times
