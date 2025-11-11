@@ -1,4 +1,4 @@
-from src.logger import get_logger
+from logger import get_logger
 import sys
 
 logger = get_logger("Exception")
