@@ -2,8 +2,10 @@ import sys
 from src.entity.config_entity import VehiclePredictorConfig
 from src.entity.s3_estimator import VehicleInsuranceEstimator
 from src.exception import CustomException
-from src.logger import logging
+from src.logger import get_logger
 from pandas import DataFrame
+
+logger = get_logger("Prediction_pipeline")
 
 
 class VehicleData:
@@ -49,7 +51,7 @@ class VehicleData:
 
     def get_vehicle_data_as_dict(self):
  
-        logging.info("Entered vehicle data method in VehicleData class")
+        logger.info("Entered vehicle data method in VehicleData class")
 
         try:
             input_data = {
@@ -66,8 +68,8 @@ class VehicleData:
                 "Vehicle_Damage_Yes": [self.Vehicle_Damage_Yes]
             }
 
-            logging.info("Created vehicle data dict")
-            logging.info("Exited get_vehicle_data_as_dict method as VehicleData class")
+            logger.info("Created vehicle data dict")
+            logger.info("Exited get_vehicle_data_as_dict method as VehicleData class")
             return input_data
 
         except Exception as e:
@@ -83,7 +85,7 @@ class VehicleDataClassifier:
     def predict(self, dataframe) -> str:
   
         try:
-            logging.info("Entered predict method of VehicleDataClassifier class")
+            logger.info("Entered predict method of VehicleDataClassifier class")
             model = VehicleInsuranceEstimator(
                 bucket_name=self.prediction_pipeline_config.model_bucket_name,
                 model_path=self.prediction_pipeline_config.model_file_path,
