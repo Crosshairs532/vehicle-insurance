@@ -115,7 +115,7 @@ class ModelEvaluation:
             tmp_best_model_score = 0 if best_model_f1_score is None else best_model_f1_score
             result = EvaluateModelResponse(trained_model_f1_score=trained_model_f1_score,
                                            best_model_f1_score=best_model_f1_score,
-                                           is_model_accepted=trained_model_f1_score > tmp_best_model_score,
+                                           is_model_accepted = trained_model_f1_score > tmp_best_model_score,
                                            difference=trained_model_f1_score - tmp_best_model_score
                                            )
             logger.info(f"Result: {result}")

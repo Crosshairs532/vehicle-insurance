@@ -74,7 +74,7 @@ class VehicleData:
             raise CustomException(e, sys) from e
 
 class VehicleDataClassifier:
-    def __init__(self,prediction_pipeline_config: VehiclePredictorConfig = VehiclePredictorConfig(),) -> None:
+    def __init__(self,prediction_pipeline_config: VehiclePredictorConfig = VehiclePredictorConfig()) -> None:
         try:
             self.prediction_pipeline_config = prediction_pipeline_config
         except Exception as e:
