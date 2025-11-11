@@ -2,11 +2,12 @@ import sys
 
 from src.cloud_storage.aws_storage import StorageService
 from src.exception import CustomException
-from src.logger import logger
+from src.logger import get_logger
 from src.entity.artifact_entity import ModelPusherArtifact, ModelEvaluationArtifact
 from src.entity.config_entity import ModelPusherConfig
 from src.entity.s3_estimator import VehicleInsuranceEstimator
 
+logger = get_logger("Model Pusher")
 
 class ModelPusher:
     def __init__(self, model_evaluation_artifact: ModelEvaluationArtifact,
@@ -19,7 +20,7 @@ class ModelPusher:
                                 model_path=model_pusher_config.s3_model_key_path)
 
     def initiate_model_pusher(self) -> ModelPusherArtifact:
-        logger.info("Entered initiate_model_pusher method of ModelTrainer class")
+        logger.info("Entered initiate_model_pusher")
 
         try:
             logger.info("<<< Model Pusher Started >>>")
@@ -30,7 +31,7 @@ class ModelPusher:
             model_pusher_artifact = ModelPusherArtifact(bucket_name=self.model_pusher_config.bucket_name,
                                                         s3_model_path=self.model_pusher_config.s3_model_key_path)
 
-            logger.info("Uploaded artifacts folder to s3 bucket")
+            logger.info("Uploaded trained Model to s3 bucket")
             logger.info(f"Model pusher artifact: [{model_pusher_artifact}]")
             logger.info("Exited initiate_model_pusher method of ModelTrainer class")
             

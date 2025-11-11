@@ -3,14 +3,15 @@ from src.entity.artifact_entity import ModelTrainerArtifact, DataIngestionArtifa
 from sklearn.metrics import f1_score
 from src.exception import CustomException
 from src.constants import TARGET_COLUMN
-from src.logger import logging
 from src.utils.main_utils import load_object
 import sys
 import pandas as pd
 from typing import Optional
 from src.entity.s3_estimator import VehicleInsuranceEstimator
 from dataclasses import dataclass
-from src.logger import logger
+from src.logger import get_logger
+
+logger = get_logger("Model Evaluation")
 
 @dataclass
 class EvaluateModelResponse:
@@ -32,6 +33,13 @@ class ModelEvaluation:
             raise CustomException(e, sys) from e
 
     def get_best_model(self):
+        
+        """
+            bucket name 
+            model key path 
+
+        """
+        
         try:
             bucket_name = self.model_eval_config.bucket_name
             model_path=self.model_eval_config.s3_model_key_path
@@ -87,13 +95,17 @@ class ModelEvaluation:
             x = self._drop_id_column(x)
             x = self._create_dummy_columns(x)
             x = self._rename_columns(x)
+
             trained_model = load_object(file_path=self.model_trainer_artifact.trained_model_file_path)
-            logger.info("Trained model loaded/exists.")
+            logger.info("Trained model loaded.")
+
             trained_model_f1_score = self.model_trainer_artifact.metric_artifact.f1_score
             logger.info(f"F1_Score for this model: {trained_model_f1_score}")
 
             best_model_f1_score=None
             best_model = self.get_best_model()
+
+        
             if best_model is not None:
                 logger.info(f"Computing F1_Score for production model..")
                 y_hat_best_model = best_model.predict(x)

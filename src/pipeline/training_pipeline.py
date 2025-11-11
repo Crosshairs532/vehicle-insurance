@@ -2,13 +2,16 @@ from src.components.data_transformation import DataTransformation
 from src.components.data_validation import DataValidation
 from src.entity.artifact_entity import *
 from src.exception import CustomException
-from src.logger import logger
+from src.logger import get_logger
 from src.components.data_ingestion import DataIngestion
 from src.entity.config_entity import *
 from src.components.model_trainer import ModelTrainer
 from src.components.model_evaluation import ModelEvaluation
 from src.components.model_pusher import ModelPusher
 import sys
+
+logger = get_logger('Training Pipeline')
+
 class TrainPipeline:
     def __init__(self):
         self.data_ingestion_config = DataIngestionConfig()
@@ -22,8 +25,8 @@ class TrainPipeline:
             logger.info("Entered the start_data_ingestion method of TrainPipeline class")
             logger.info("Getting the data from mongodb")
             data_ingestion = DataIngestion(data_ingestion_config=self.data_ingestion_config)
+            logger.info("Got the Data from Mongodb.")
             data_ingestion_artifact = data_ingestion.initiate_data_ingestion()
-            logger.info("Got the train_set and test_set from mongodb")
             logger.info("Exited the start_data_ingestion method of TrainPipeline class")
             return data_ingestion_artifact
         except Exception as e:
@@ -50,8 +53,6 @@ class TrainPipeline:
     def start_data_transformation(self, data_ingestion_artifact: DataIngestionArtifact, data_validation_artifact: DataValidationArtifact) -> DataTransformationArtifact:
 
         try:
-
-          
             data_transformation = DataTransformation(data_ingestion_artifact=data_ingestion_artifact,
                                                      data_transformation_config=self.data_transformation_config,
                                                      data_validation_artifact=data_validation_artifact)
@@ -105,16 +106,28 @@ class TrainPipeline:
 
     def run_pipeline(self) -> None:
         try:
+            logger.info('=============== Data Ingestion Started =================')
             data_ingestion_artifact = self.start_data_ingestion()
             logger.info('=============== Data Ingestion Completed =================')
+            
+            logger.info('=============== Data Validation Started =================')
             data_validation_artifact = self.start_data_validation(data_ingestion_artifact=data_ingestion_artifact)
             logger.info('=============== Data Validation Completed =================')
+
+
+
+            logger.info('=============== Data Transformation Started =================')
             data_transformation_artifact = self.start_data_transformation(
             data_ingestion_artifact=data_ingestion_artifact, data_validation_artifact=data_validation_artifact)
             logger.info('=============== Data Transformation Completed =================')
+
+
+            logger.info('=============== Model Trained Started =================')
             model_trainer_artifact = self.start_model_trainer(data_transformation_artifact=data_transformation_artifact)
             logger.info('=============== Model Trained Completed =================')
 
+
+            logger.info('=============== Model Evaluation Started =================')
             model_evaluation_artifact = self.start_model_evaluation(data_ingestion_artifact=data_ingestion_artifact,
                                                                                 model_trainer_artifact=model_trainer_artifact)
             logger.info('=============== Model Evaluation Completed =================')
@@ -122,6 +135,7 @@ class TrainPipeline:
             if not model_evaluation_artifact.is_model_accepted:
                 logger.info(f"Model not accepted.")
                 return None
+            
             model_pusher_artifact = self.start_model_pusher(model_evaluation_artifact=model_evaluation_artifact)
             logger.info('=============== Model Pusher Completed =================')
         except Exception as e:

@@ -12,7 +12,6 @@ columns:
   - Vintage: int
   - Response: int
 
-
 numerical_columns:
   - Age
   - Driving_License
@@ -30,11 +29,9 @@ categorical_columns:
 
 drop_columns: _id
 
-# for data transformation
 num_features:
   - Age
   - Vintage
-
 
 mm_columns:
   - Annual_Premium

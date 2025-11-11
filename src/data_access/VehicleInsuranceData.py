@@ -7,7 +7,7 @@ from src.configuration.mongo_db_connection import MongoDBClient
 from src.constants import DATABASE_NAME
 from src.exception import CustomException
 
-class Proj1Data:
+class VehicleInsuranceData:
     def __init__(self) -> None:
 
         try:

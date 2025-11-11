@@ -4,7 +4,9 @@ from pandas import DataFrame
 from sklearn.pipeline import Pipeline
 
 from src.exception import CustomException
-from src.logger import logger
+from src.logger import get_logger
+
+logger = get_logger("My Model")
 
 class TargetValueMapping:
     def __init__(self):
@@ -27,10 +29,8 @@ class MyModel:
         try:
             logger.info("Starting prediction process.")
 
-            # Step 1: Apply scaling transformations using the pre-trained preprocessing object
-            transformed_feature = self.preprocessing_object.transform(dataframe)
 
-            # Step 2: Perform prediction using the trained model
+            transformed_feature = self.preprocessing_object.transform(dataframe)
             logger.info("Using the trained model to get predictions")
             predictions = self.trained_model_object.predict(transformed_feature)
 

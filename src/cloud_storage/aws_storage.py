@@ -1,9 +1,13 @@
 from src.configuration.aws_connection import S3Client
-from src.logger import logger
+from src.logger import get_logger
 from src.exception import CustomException
 import sys
 import os
 import pandas as pd
+import pickle
+
+
+logger = get_logger("Aws Storage")
 
 class StorageService:
 
@@ -36,7 +40,6 @@ class StorageService:
     
     def load_model(self, model_name: str, bucket_name: str, model_dir: str = None):
 
-    
         try:
             model_file = model_dir + "/" + model_name if model_dir else model_name
             file_object = self.get_file_object(model_file, bucket_name)
