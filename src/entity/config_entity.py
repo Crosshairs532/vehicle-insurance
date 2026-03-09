@@ -11,7 +11,6 @@ class TrainingPipelineConfig:
     artifact_dir: str = os.path.join(ARTIFACT_DIR, TIMESTAMP)
     timestamp: str = TIMESTAMP
 
-
 training_pipeline_config: TrainingPipelineConfig = TrainingPipelineConfig()
 
 
